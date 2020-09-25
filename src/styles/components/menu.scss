@@ -1,0 +1,154 @@
+.products {
+    position: fixed;
+    height: 100%;
+    width: 100%;
+    z-index: 9;
+    overflow: hidden;
+    background: $white;
+
+    .close,
+    .menu-title {
+        z-index: 1000;
+        position: absolute;
+        color: $black;
+        top: 3rem;
+        right: 5.8rem;
+        display: flex;
+        align-items: center;
+        // text-transform: uppercase;
+        // font-size: .875rem;
+        letter-spacing: .05rem;
+        cursor: pointer;
+
+        svg {
+            height: 30px;
+        }
+    }
+
+    .menu-title {
+        top: 3rem;
+        left: 5.8rem;
+        font-size: 1.4rem;
+    }
+
+    .menu {
+        height: 100vh;
+
+        .menu-inner {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 8rem 0;
+            height: 100vh;
+
+            ul {
+                width: 100%;
+                display: block;
+
+                li {
+                    position: relative;
+                    width: 100%;
+                    height: 115px;
+
+                    a {
+                        height: 100%;
+
+                        .wrapper {
+                            height: 100%;
+                            display: flex;
+                            align-items: flex-end;
+
+                            .title {
+                                margin: 0 1rem;
+
+                                h2 {
+                                    overflow: hidden;
+                                    margin: 0;
+                                    font-size: 4rem;
+                                    font-weight: 500;
+                                }
+                            }
+
+                            .thumbnail {
+                                margin-bottom: 1.4rem;
+                                overflow: hidden;
+                                position: absolute;
+                                left: 30rem;
+                                width: 7.6rem;
+                                height: 5rem;
+
+                                .mask {}
+
+                                img {
+                                    position: absolute;
+                                    width: 100%;
+                                    height: 100%;
+                                    right: 0;
+                                }
+                            }
+
+                            .floating-image {
+                                pointer-events: none;
+                                width: 24rem;
+                                position: absolute;
+                                // background-size: cover;
+                                // background-position: 50%;
+                                z-index: 99;
+                                overflow: hidden;
+                                opacity: 0;
+                            }
+                        }
+
+                        .line {
+                            height: 1px;
+                            width: 100%;
+                            background: $black;
+                            margin-bottom: .8rem;
+                            position: relative;
+                            display: flex;
+                            align-items: center;
+
+                            &.flex-0 {
+                                flex: 0;
+
+                                &::after {
+                                    display: none;
+                                }
+                            }
+
+                            &.flex-1 {
+                                flex: 1;
+                            }
+
+                            &.flex-2 {
+                                flex: 2;
+                            }
+
+                            &.flex-3 {
+                                flex: 3;
+                            }
+
+                            &::after {
+                                content: '';
+                                position: absolute;
+                                height: 6px;
+                                width: 6px;
+                                border-radius: 100%;
+                                background-color: $black;
+                            }
+
+                            &.left {
+                                &::after {
+                                    right: 0;
+                                }
+                            }
+
+                            .mask {}
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
