@@ -3,7 +3,7 @@ import { Link } from "gatsby"
 
 import { useLocation } from "@reach/router"
 
-const Header = ({ setMenuState }) => {
+const Header = ({ setMenuState, setCursorHovered }) => {
   const location = useLocation()
 
   useEffect(() => {
@@ -14,10 +14,20 @@ const Header = ({ setMenuState }) => {
     <header>
       <div className="container fluid">
         <div className="header-inner">
-          <Link activeClassName="active" to="/">
+          <Link
+            onMouseEnter={() => setCursorHovered(true)}
+            onMouseLeave={() => setCursorHovered(false)}
+            activeClassName="active"
+            to="/"
+          >
             Pocket.
           </Link>
-          <div onClick={() => setMenuState(true)} className="hamburger-menu">
+          <div
+            onClick={() => setMenuState(true)}
+            className="hamburger-menu"
+            onMouseEnter={() => setCursorHovered(true)}
+            onMouseLeave={() => setCursorHovered(false)}
+          >
             <span></span>
             <span></span>
           </div>
