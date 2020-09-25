@@ -1,4 +1,4 @@
-import React from "react"
+import React, { useState } from "react"
 import { Link } from "gatsby"
 import { Image } from "../components/gatsby-images/image"
 
@@ -41,10 +41,15 @@ const maskAnimation = {
 
 const Menu = ({ menuState, setMenuState }) => {
   return (
-    <>
-      <AnimatePresence>
-        {menuState && (
-          <motion.div exit={{ opacity: 0 }} className="products">
+    <AnimatePresence>
+      {menuState && (
+        <>
+          <motion.div
+            initial={{ visibility: "hidden" }}
+            animate={{ visibility: "visible", transition: { delay: 1 } }}
+            exit={{ visibility: "hidden", transition: { delay: 1 } }}
+            className="products"
+          >
             <div className="menu-title">Products</div>
             <div onClick={() => setMenuState(false)} className="close">
               <Close />
@@ -74,9 +79,10 @@ const Menu = ({ menuState, setMenuState }) => {
               </div>
             </div>
           </motion.div>
-        )}
-      </AnimatePresence>
-    </>
+          <Panels />
+        </>
+      )}
+    </AnimatePresence>
   )
 }
 
@@ -131,6 +137,46 @@ const List = ({
         </div>
       </Link>
     </motion.li>
+  )
+}
+
+const Panels = () => {
+  const [panelComplete, setPanelComplete] = useState(false)
+
+  return (
+    <>
+      <motion.div
+        style={{ background: panelComplete ? "#e7e7de" : "#e7dee7" }}
+        initial={{ height: 0 }}
+        animate={{
+          height: [0, window.innerHeight, 0],
+          bottom: [null, 0, 0],
+        }}
+        exit={{
+          height: [0, window.innerHeight, 0],
+          top: [null, 0, 0],
+        }}
+        transition={{ ...transition, duration: 2, times: [0, 0.5, 1] }}
+        className="left-panel-background"
+      ></motion.div>
+      <motion.div
+        style={{ background: panelComplete ? "#e7e7de" : "#e7dee7" }}
+        initial={{ height: 0 }}
+        animate={{
+          height: [0, window.innerHeight, 0],
+          bottom: [0, 0, window.innerHeight],
+        }}
+        exit={{
+          height: [0, window.innerHeight, 0],
+          bottom: [null, 0, 0],
+        }}
+        transition={{ ...transition, duration: 2, times: [0, 0.5, 1] }}
+        className="right-panel-background"
+        onAnimationComplete={() => {
+          setPanelComplete(!panelComplete)
+        }}
+      ></motion.div>
+    </>
   )
 }
 
