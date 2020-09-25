@@ -1,6 +1,7 @@
 import React, { useState } from "react"
 import PropTypes from "prop-types"
 import { useStaticQuery, graphql } from "gatsby"
+import useMousePosition from "../hooks/useMousePosition"
 
 //Components
 import Header from "./header"
@@ -22,13 +23,15 @@ const Layout = ({ children }) => {
 
   const [menuState, setMenuState] = useState(false)
 
+  const { x, y } = useMousePosition()
+
   return (
     <div className="app">
       <Header
         setMenuState={setMenuState}
         siteTitle={siteData.site.siteMetadata.title}
       />
-      <Menu menuState={menuState} setMenuState={setMenuState} />
+      <Menu x={x} y={y} menuState={menuState} setMenuState={setMenuState} />
       <div>
         <main>{children}</main>
       </div>

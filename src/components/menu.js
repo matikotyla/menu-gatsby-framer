@@ -1,4 +1,4 @@
-import React, { useState } from "react"
+import React, { useState, useRef, useEffect } from "react"
 import { Link } from "gatsby"
 import { Image } from "../components/gatsby-images/image"
 
@@ -39,7 +39,7 @@ const maskAnimation = {
   animate: { width: 0 },
 }
 
-const Menu = ({ menuState, setMenuState }) => {
+const Menu = ({ menuState, setMenuState, x, y }) => {
   return (
     <AnimatePresence>
       {menuState && (
@@ -72,6 +72,9 @@ const Menu = ({ menuState, setMenuState }) => {
                         leftLineFlex={list.leftLineFlex}
                         rightLineFlex={list.rightLineFlex}
                         thumbnailPosition={list.thumbnailPosition}
+                        x={x}
+                        y={y}
+                        offset={list.offset}
                       />
                     ))}
                   </motion.ul>
@@ -93,9 +96,26 @@ const List = ({
   leftLineFlex,
   rightLineFlex,
   thumbnailPosition,
+  x,
+  y,
+  offset,
 }) => {
+  let list = useRef(null)
+  const [hoverState, setHoverState] = useState(false)
+  const [listPosition, setListPosition] = useState({
+    top: 0,
+    left: 0,
+  })
+
+  useEffect(() => {
+    setListPosition({
+      top: list.current.getBoundingClientRect().top,
+      left: list.current.getBoundingClientRect().left,
+    })
+  }, [hoverState])
+
   return (
-    <motion.li>
+    <li ref={list}>
       <Link to={`/product/${id}`}>
         <div className="wrapper">
           <div className={`line left flex-${leftLineFlex}`}>
@@ -105,7 +125,11 @@ const List = ({
               className="mask"
             ></motion.div>
           </div>
-          <div className="title">
+          <motion.div
+            className="title"
+            onHoverStart={() => setHoverState(true)}
+            onHoverEnd={() => setHoverState(false)}
+          >
             <h2>
               <motion.div
                 variants={titleSlideUp}
@@ -115,7 +139,7 @@ const List = ({
                 {title}
               </motion.div>
             </h2>
-          </div>
+          </motion.div>
           <div className="thumbnail" style={{ left: thumbnailPosition }}>
             <Image src={src} />
             <motion.div
@@ -124,9 +148,20 @@ const List = ({
               className="mask"
             ></motion.div>
           </div>
-          <div className="floating-image">
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{
+              opacity: hoverState ? 1 : 0,
+              x: x - listPosition.left + offset,
+              y: y - listPosition.top,
+            }}
+            // transition={{
+            //   ease: "linear",
+            // }}
+            className="floating-image"
+          >
             <Image src={src} />
-          </div>
+          </motion.div>
           <div className={`line right flex-${rightLineFlex}`}>
             <motion.div
               variants={maskAnimation}
@@ -136,7 +171,7 @@ const List = ({
           </div>
         </div>
       </Link>
-    </motion.li>
+    </li>
   )
 }
 
