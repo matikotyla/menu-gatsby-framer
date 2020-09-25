@@ -42,4 +42,4 @@ and navigate to `localhost:8000`
 
 This is how the final effect looks like
 
-![](https://github.com/maticoder/todo-firebase-facebook-auth/blob/master/menu.gif)
+![](https://github.com/maticoder/menu-gatsby-framer/blob/master/menu.gif)
