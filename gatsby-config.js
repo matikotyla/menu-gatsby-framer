@@ -2,7 +2,7 @@ module.exports = {
   siteMetadata: {
     title: `Awwwards Rebuilt Mini`,
     description: `A mini rebuilt of a hamburger menu`,
-    author: `@matikcoder`,
+    author: `@maticoder`,
   },
   plugins: [
     `gatsby-plugin-react-helmet`,
